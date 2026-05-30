@@ -4,7 +4,7 @@ package model;
  * 좌석 클래스
  */
 public class Seat extends Space {
-    // 좌석 고유 속성 - 성향테스트 결정 후 추가 예정
+    // 좌석 고유 속성
     private final int quietLevel;         // 조용함 관련
     private final int conversationLevel;  // 대화 가능 여부
     private final int openLevel;          // 개방감
@@ -39,21 +39,10 @@ public class Seat extends Space {
 
     @Override
     public String toCsvLine() {
-        return String.join(",",
-                getSpaceType().name(),
-                getSpaceId(),
-                getName(),
-                getLocation(),
-                String.valueOf(quietLevel),
-                String.valueOf(conversationLevel),
-                String.valueOf(openLevel),
-                String.valueOf(partitionLevel),
-                String.valueOf(typingLevel),
-                String.valueOf(socketLevel),
-                String.valueOf(sofaLevel),
-                String.valueOf(rollingChairLevel),
-                String.valueOf(normalChairLevel)
-        );
+        return String.format("%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                getSpaceType(), getSpaceId(), getName(), getLocation(),
+                quietLevel, conversationLevel, openLevel, partitionLevel,
+                typingLevel, socketLevel, sofaLevel, rollingChairLevel, normalChairLevel);
     }
 
     // Getters
