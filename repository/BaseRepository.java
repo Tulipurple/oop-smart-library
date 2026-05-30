@@ -24,7 +24,9 @@ public abstract class BaseRepository<T> {
     protected abstract void loadFromFile();
     protected abstract String toCsvLine(T item);
 
+    // ───────────────────────────────────────────────────────
     // 공통 CRUD 메서드
+    // ───────────────────────────────────────────────────────
     public synchronized List<T> findAll() {
         return new ArrayList<>(dataList);
     }
@@ -44,7 +46,9 @@ public abstract class BaseRepository<T> {
         saveToFile();
     }
 
-    // 파일 I/O 공통 메서드
+    // ───────────────────────────────────────────────────────
+    // 공통 파일 I/O 메서드
+    // ───────────────────────────────────────────────────────
     protected synchronized void saveToFile() {
         File file = new File(filePath);
         if (file.getParentFile() != null) {

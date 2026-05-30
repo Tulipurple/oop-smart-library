@@ -4,11 +4,32 @@ package model;
  * 좌석 클래스
  */
 public class Seat extends Space {
-    // 좌석 고유 속성 - 성향테스트 결정 후 추가 예정
+    // 좌석 고유 속성
+    private final int quietLevel;         // 조용함 관련
+    private final int conversationLevel;  // 대화 가능 여부
+    private final int openLevel;          // 개방감
+    private final int partitionLevel;     // 칸막이 여부
+    private final int typingLevel;        // 타이핑 가능 여부
+    private final int socketLevel;        // 콘센트 여부
+    private final int sofaLevel;          // 쇼파 의자 여부 (O: 2, X: 0)
+    private final int rollingChairLevel;  // 바퀴 의자 여부 (O: 2, X: 0)
+    private final int normalChairLevel;   // 일반 의자 여부 (O: 2, X: 0)
 
     // 생성자
-    public Seat(String spaceId, String name, String location) {
+    public Seat(String spaceId, String name, String location,
+                int quietLevel, int conversationLevel, int openLevel,
+                int partitionLevel, int typingLevel, int socketLevel,
+                int sofaLevel, int rollingChairLevel, int normalChairLevel) {
         super(spaceId, name, location);
+        this.quietLevel        = quietLevel;
+        this.conversationLevel = conversationLevel;
+        this.openLevel         = openLevel;
+        this.partitionLevel    = partitionLevel;
+        this.typingLevel       = typingLevel;
+        this.socketLevel       = socketLevel;
+        this.sofaLevel         = sofaLevel;
+        this.rollingChairLevel = rollingChairLevel;
+        this.normalChairLevel  = normalChairLevel;
     }
 
     @Override
@@ -18,9 +39,20 @@ public class Seat extends Space {
 
     @Override
     public String toCsvLine() {
-        // CSV 저장 형식: spacetype, spaceId,name,location,
-        return String.format("%s,%s,%s,%s", getSpaceType(), getSpaceId(), getName(), getLocation());
+        return String.format("%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                getSpaceType(), getSpaceId(), getName(), getLocation(),
+                quietLevel, conversationLevel, openLevel, partitionLevel,
+                typingLevel, socketLevel, sofaLevel, rollingChairLevel, normalChairLevel);
     }
 
-    // Getters for 좌석 고유 속성 - 성향테스트 결정 후 추가 예정
+    // Getters
+    public int getQuietLevel()        { return quietLevel;        }
+    public int getConversationLevel() { return conversationLevel; }
+    public int getOpenLevel()         { return openLevel;         }
+    public int getPartitionLevel()    { return partitionLevel;    }
+    public int getTypingLevel()       { return typingLevel;       }
+    public int getSocketLevel()       { return socketLevel;       }
+    public int getSofaLevel()         { return sofaLevel;         }
+    public int getRollingChairLevel() { return rollingChairLevel; }
+    public int getNormalChairLevel()  { return normalChairLevel;  }
 }
