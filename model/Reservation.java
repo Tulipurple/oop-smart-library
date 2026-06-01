@@ -27,7 +27,7 @@ public class Reservation {
                        LocalDateTime startTime,
                        LocalDateTime endTime) {
 
-        if (personCount < 1) {
+        if (personCount < 1) { //데이터 유효성 검사
             throw new IllegalArgumentException("인원수는 1명 이상이어야 합니다.");
         }
 
