@@ -21,14 +21,21 @@ public abstract class BaseRepository<T> {
         loadFromFile(); 
     }
 
+    // 하위 클래스에서 구현해야 하는 추상 메서드
     protected abstract void loadFromFile();
     protected abstract String toCsvLine(T item);
 
+
+    // ───────────────────────────────────────────────────────
     // 공통 CRUD 메서드
+    // ───────────────────────────────────────────────────────
+
+    // 전체 데이터 조회
     public synchronized List<T> findAll() {
         return new ArrayList<>(dataList);
     }
 
+    // 조건에 맞는 데이터 조회
     public synchronized List<T> findBy(Predicate<T> predicate) {
         List<T> result = new ArrayList<>();
         for (T item : dataList) {
@@ -39,12 +46,17 @@ public abstract class BaseRepository<T> {
         return result;
     }
 
+    // 데이터 추가 후 파일 저장
     public synchronized void save(T item) {
         dataList.add(item);
         saveToFile();
     }
 
-    // 파일 I/O 공통 메서드
+    // ───────────────────────────────────────────────────────
+    // 공통 파일 I/O 메서드
+    // ───────────────────────────────────────────────────────
+
+    // 데이터를 파일에 저장
     protected synchronized void saveToFile() {
         File file = new File(filePath);
         if (file.getParentFile() != null) {
@@ -57,10 +69,11 @@ public abstract class BaseRepository<T> {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("[BaseRepository] 파일 저장 실패 (" + filePath + "): " + e.getMessage());
         }
     }
      
+    // 파일에서 데이터를 읽어 리스트로 반환
     protected List<String> readLines(){
         List<String> lines = new ArrayList<>();
         File file = new File(filePath);
@@ -74,7 +87,7 @@ public abstract class BaseRepository<T> {
                 lines.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("[BaseRepository] 파일 읽기 실패 (" + filePath + "): " + e.getMessage());
         }
         return lines;
     }
