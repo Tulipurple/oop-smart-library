@@ -1,13 +1,15 @@
 package model;
 
 /**
- * 사용자 정보 모델
- * 로그인 및 사용자 식별을 위한 학번과 이름만 관리한다.
+ * 사용자 정보를 저장하는 모델 클래스
  */
 public class User {
 
-    private final String studentId; // 학번 (고유 식별자)
-    private final String name;      // 이름
+    // 학번 (사용자 고유 식별자)
+    private final String studentId;
+
+    // 사용자 이름
+    private final String name;
 
     /**
      * 사용자 생성자
@@ -22,6 +24,8 @@ public class User {
 
     /**
      * 학번 반환
+     *
+     * @return 학번
      */
     public String getStudentId() {
         return studentId;
@@ -29,6 +33,8 @@ public class User {
 
     /**
      * 이름 반환
+     *
+     * @return 이름
      */
     public String getName() {
         return name;
@@ -36,7 +42,9 @@ public class User {
 
     /**
      * CSV 저장용 문자열 반환
-     * 형식: 학번,이름
+     * 형식 : studentId,name
+     *
+     * @return CSV 형식 문자열
      */
     public String toCsvLine() {
         return studentId + "," + name;
