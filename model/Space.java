@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * 공간(좌석, 스터디룸)의 공통 속성과 메서드를 정의하는 추상 클래스
+ */
 public abstract class Space {
     // 공통 속성
     private final String spaceId;
