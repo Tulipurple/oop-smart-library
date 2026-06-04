@@ -1,7 +1,6 @@
 package model;
 
 import repository.SpaceRepository;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,11 +15,11 @@ public class Recommender {
 
     // 성향 점수 기반 상위 3개 좌석 산출
     public List<Space> recommendSpaces(PreferenceResult result) {
-        List<Space> allSpaces = spaceRepository.findAll();
+        // 팀원 C분의 전용 메서드 규격을 사용하여 SEAT 타입 공간 정보만 추출
+        List<Space> allSeats = spaceRepository.findAllSeats();
         List<ScoredSpace> scoredSpaces = new ArrayList<>();
 
-        for (Space space : allSpaces) {
-            // StudyRoom 등 타 유형 배제하고 Seat 속성만 필터링
+        for (Space space : allSeats) {
             if (space instanceof Seat) {
                 Seat seat = (Seat) space;
                 double score = calculateScore(result, seat);
@@ -75,7 +74,6 @@ public class Recommender {
 
         @Override
         public int compareTo(ScoredSpace other) {
-            // 내림차순 정렬 유도
             return Double.compare(other.score, this.score);
         }
     }
