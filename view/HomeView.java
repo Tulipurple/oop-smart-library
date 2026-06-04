@@ -4,7 +4,6 @@ import controller.NavigationController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class HomeView extends BaseView {
 
@@ -21,14 +20,12 @@ public class HomeView extends BaseView {
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
 
-        // 상단 시스템 타이틀
         JLabel titleLabel = new JLabel("OOP Smart Library");
         titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 36));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setBounds(50, 60, 700, 50);
         panel.add(titleLabel);
 
-        // 안내 패널
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(null);
         infoPanel.setBackground(new Color(245, 245, 245));
@@ -48,17 +45,16 @@ public class HomeView extends BaseView {
 
         panel.add(infoPanel);
 
-        // 좌석 추천 시작 버튼
         startTestButton = new JButton("좌석 추천 시작하기");
         startTestButton.setFont(new Font("맑은 고딕", Font.BOLD, 16));
         startTestButton.setBounds(300, 380, 200, 45);
+
+        startTestButton.addActionListener(e -> navController.navigateTo(
+                NavigationController.TEST
+        ));
+
         panel.add(startTestButton);
 
         return panel;
-    }
-
-    // 좌석 추천 시작 버튼 리스너 등록
-    public void addStartTestButtonListener(ActionListener listener) {
-        startTestButton.addActionListener(listener);
     }
 }

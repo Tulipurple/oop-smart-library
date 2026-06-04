@@ -16,11 +16,13 @@ public class RecommendController {
     private final PreferenceResult resultModel;
     private final RecommendView view;
     private final User currentUser;
+    private TestController testController;
 
     public RecommendController(Recommender recommender,
                                PreferenceResult resultModel,
                                RecommendView view,
                                User currentUser) {
+
         this.recommender = recommender;
         this.resultModel = resultModel;
         this.view = view;
@@ -29,27 +31,74 @@ public class RecommendController {
         initController();
     }
 
-    // 버튼 액션 리스너 이벤트 초기화
-    private void initController() {
-        view.addRecommendButtonListener(new RecommendActionClickListener());
+    public void setTestController(TestController testController) {
+        this.testController = testController;
     }
 
-    // 알고리즘 스펙 연산 실행 및 최종 결과 뷰 바인딩 요청
+    private void initController() {
+        view.addRecommendButtonListener(
+                new RecommendActionClickListener()
+        );
+    }
+
     private void executeRecommendation() {
+
+        System.out.println("===== 추천 시작 =====");
+
+        System.out.println(
+                "quiet = "
+                        + resultModel.getQuietPreference()
+        );
+
+        System.out.println(
+                "conversation = "
+                        + resultModel.getConversationPreference()
+        );
+
+        System.out.println(
+                "typing = "
+                        + resultModel.getTypingNeed()
+        );
+
+        System.out.println(
+                "open = "
+                        + resultModel.getOpenPreference()
+        );
+
+        System.out.println(
+                "partition = "
+                        + resultModel.getPartitionPreference()
+        );
+
+        System.out.println(
+                "socket = "
+                        + resultModel.getSocketNeed()
+        );
+
         List<Space> recommendedSpaces =
                 recommender.recommendSpaces(resultModel);
 
         view.displayRecommendations(
                 currentUser.getName(),
-                recommendedSpaces);
+                recommendedSpaces
+        );
     }
 
-    // 추천 매칭 실행 명령 핸들링을 위한 이벤트 리스너
-    private class RecommendActionClickListener implements ActionListener {
+    public void refreshRecommendations() {
+        executeRecommendation();
+    }
+
+    private class RecommendActionClickListener
+            implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            executeRecommendation();
+
+            if (testController != null) {
+                testController.resetTest();
+            }
+
+            view.navigateToTest();
         }
     }
 }

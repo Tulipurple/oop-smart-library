@@ -1,6 +1,7 @@
 package view;
 
 import controller.NavigationController;
+import controller.RecommendController;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -8,17 +9,29 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import model.Space;
 
-/**
- * 추천 결과 완료 화면
- */
 public class RecommendView extends BaseView {
+
+    private RecommendController controller;
 
     private JLabel userWelcomeLabel;
     private JPanel cardsContainerPanel;
+
+    private JButton recommendButton;
     private JButton homeButton;
 
     public RecommendView(NavigationController navController) {
         super(navController);
+    }
+
+    public void setController(RecommendController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void onShow() {
+        if (controller != null) {
+            controller.refreshRecommendations();
+        }
     }
 
     @Override
@@ -28,41 +41,76 @@ public class RecommendView extends BaseView {
         panel.setLayout(null);
         panel.setBackground(VIEW_BG_COLOR);
 
-        // 상단 안내 메시지
         userWelcomeLabel = new JLabel(
                 "성향 분석을 바탕으로 추천된 최적의 공간입니다."
         );
         userWelcomeLabel.setFont(TITLE_FONT);
-        userWelcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        userWelcomeLabel.setBounds(50, 40, 700, 40);
+        userWelcomeLabel.setHorizontalAlignment(
+                SwingConstants.CENTER
+        );
+        userWelcomeLabel.setBounds(
+                50,
+                40,
+                700,
+                40
+        );
         panel.add(userWelcomeLabel);
 
-        // 추천 공간 카드 컨테이너
         cardsContainerPanel = new JPanel();
         cardsContainerPanel.setLayout(null);
-        cardsContainerPanel.setBackground(VIEW_BG_COLOR);
-        cardsContainerPanel.setBounds(50, 110, 700, 260);
+        cardsContainerPanel.setBackground(
+                VIEW_BG_COLOR
+        );
+        cardsContainerPanel.setBounds(
+                50,
+                110,
+                700,
+                260
+        );
         panel.add(cardsContainerPanel);
 
-        // 다시 추천받기 버튼
-        homeButton = new JButton("다시 추천받기");
+        recommendButton = new JButton(
+                "다시 추천받기"
+        );
+        recommendButton.setFont(BODY_FONT);
+        recommendButton.setBounds(
+                180,
+                420,
+                170,
+                40
+        );
+        panel.add(recommendButton);
+
+        homeButton = new JButton(
+                "홈으로"
+        );
         homeButton.setFont(BODY_FONT);
-        homeButton.setBounds(300, 400, 200, 40);
+        homeButton.setBounds(
+                450,
+                420,
+                170,
+                40
+        );
+
+        homeButton.addActionListener(
+                e -> navController.navigateTo(
+                        NavigationController.HOME
+                )
+        );
+
         panel.add(homeButton);
 
         return panel;
     }
 
-    /**
-     * 추천 좌석 결과 카드 동적 렌더링
-     */
     public void displayRecommendations(
             String userName,
             List<Space> recommendedSpaces
     ) {
 
         userWelcomeLabel.setText(
-                userName + "님의 성향 분석 기반 최적의 추천 좌석입니다."
+                userName +
+                "님의 성향 분석 기반 최적의 추천 공간입니다."
         );
 
         cardsContainerPanel.removeAll();
@@ -71,16 +119,26 @@ public class RecommendView extends BaseView {
         int cardHeight = 240;
         int gap = 25;
 
-        for (int i = 0; i < recommendedSpaces.size(); i++) {
+        for (int i = 0;
+             i < recommendedSpaces.size();
+             i++) {
 
-            Space space = recommendedSpaces.get(i);
+            Space space =
+                    recommendedSpaces.get(i);
 
-            JPanel card = new JPanel();
+            JPanel card =
+                    new JPanel();
+
             card.setLayout(null);
             card.setBackground(Color.WHITE);
+
             card.setBorder(
                     new LineBorder(
-                            new Color(180, 200, 220),
+                            new Color(
+                                    180,
+                                    200,
+                                    220
+                            ),
                             1
                     )
             );
@@ -92,19 +150,33 @@ public class RecommendView extends BaseView {
                     cardHeight
             );
 
-            // 순위 표시
             JLabel rankLabel =
-                    new JLabel(String.valueOf(i + 1));
+                    new JLabel(
+                            String.valueOf(i + 1)
+                    );
 
             rankLabel.setFont(
-                    new Font("Arial", Font.BOLD, 14)
+                    new Font(
+                            "Arial",
+                            Font.BOLD,
+                            14
+                    )
             );
 
-            rankLabel.setBounds(12, 12, 25, 25);
+            rankLabel.setBounds(
+                    12,
+                    12,
+                    25,
+                    25
+            );
 
             rankLabel.setBorder(
                     new LineBorder(
-                            new Color(140, 160, 180),
+                            new Color(
+                                    140,
+                                    160,
+                                    180
+                            ),
                             1
                     )
             );
@@ -115,12 +187,17 @@ public class RecommendView extends BaseView {
 
             card.add(rankLabel);
 
-            // 공간 이름
             JLabel nameLabel =
-                    new JLabel(space.getName());
+                    new JLabel(
+                            space.getName()
+                    );
 
             nameLabel.setFont(
-                    new Font("맑은 고딕", Font.BOLD, 16)
+                    new Font(
+                            "맑은 고딕",
+                            Font.BOLD,
+                            16
+                    )
             );
 
             nameLabel.setHorizontalAlignment(
@@ -136,12 +213,18 @@ public class RecommendView extends BaseView {
 
             card.add(nameLabel);
 
-            // 공간 위치
             JLabel locLabel =
-                    new JLabel(space.getLocation());
+                    new JLabel(
+                            space.getLocation()
+                    );
 
-            locLabel.setFont(BODY_FONT);
-            locLabel.setForeground(Color.GRAY);
+            locLabel.setFont(
+                    BODY_FONT
+            );
+
+            locLabel.setForeground(
+                    Color.GRAY
+            );
 
             locLabel.setHorizontalAlignment(
                     SwingConstants.CENTER
@@ -156,11 +239,14 @@ public class RecommendView extends BaseView {
 
             card.add(locLabel);
 
-            // 상세 보기 버튼
             JButton detailButton =
-                    new JButton("상세 보기");
+                    new JButton(
+                            "상세 보기"
+                    );
 
-            detailButton.setFont(BODY_FONT);
+            detailButton.setFont(
+                    BODY_FONT
+            );
 
             detailButton.setBounds(
                     50,
@@ -185,12 +271,17 @@ public class RecommendView extends BaseView {
         cardsContainerPanel.repaint();
     }
 
-    /**
-     * 다시 추천받기 버튼 리스너 등록
-     */
     public void addRecommendButtonListener(
             ActionListener listener
     ) {
-        homeButton.addActionListener(listener);
+        recommendButton.addActionListener(
+                listener
+        );
+    }
+
+    public void navigateToTest() {
+        navController.navigateTo(
+                NavigationController.TEST
+        );
     }
 }
