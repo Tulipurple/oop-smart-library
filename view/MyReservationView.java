@@ -155,6 +155,8 @@ public class MyReservationView extends BaseView {
         activeModel.setRowCount(0);
         pastModel.setRowCount(0);
 
+        myReservationController.reload();
+
         String studentId = currentUser.getStudentId();
 
         // 1. 현재 예약 리스트 출력
