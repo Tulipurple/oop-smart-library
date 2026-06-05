@@ -115,6 +115,13 @@ public class NavigationController {
     }
 
     /**
+     * 화면 등록 여부 확인
+     */
+    public boolean isRegistered(String name) {
+        return viewMap.containsKey(name);
+    }
+
+    /**
      * 현재 화면 히스토리 저장
      */
     private void pushHistory() {
