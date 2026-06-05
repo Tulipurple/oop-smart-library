@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 사용자 로그인 및 예약 기능을 처리하는 컨트롤러 
+ * 사용자 로그인 및 예약 기능을 처리하는 컨트롤러
  */
 public class ReservationController {
 
@@ -63,7 +63,7 @@ public class ReservationController {
 
     /**
      * 예약 생성
-     * * 예약 성공 : true
+     * 예약 성공 : true
      * 예약 중복 : false
      */
     public synchronized boolean makeReservation(
@@ -72,13 +72,18 @@ public class ReservationController {
             LocalDateTime startTime,
             LocalDateTime endTime
     ) {
-        
+
+        // ✅ [추가] 시작시간이 종료시간보다 늦거나 같으면 예약 불가
+        if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
+            throw new IllegalArgumentException(
+                    "시작 시간은 종료 시간보다 이전이어야 합니다."
+            );
+        }
+
         String reservationId = String.valueOf(System.currentTimeMillis());
 
-        
         int defaultPersonCount = 1;
 
-        
         Reservation reservation = new Reservation(
                 reservationId,
                 studentId,
@@ -104,7 +109,8 @@ public class ReservationController {
      * 예약 ID 조회
      */
     public synchronized Reservation getReservationById(long reservationId) {
-        // long 타입을 String으로 바꾸어 레포지토리에 조회 요청을 보냅니다.
-        return reservationRepository.findByReservationId(String.valueOf(reservationId));
+        return reservationRepository.findByReservationId(
+                String.valueOf(reservationId)
+        );
     }
 }
