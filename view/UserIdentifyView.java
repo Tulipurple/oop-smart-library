@@ -6,6 +6,7 @@ import model.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Consumer;
 
 /**
  * 사용자 식별 및 로그인 (팀원의 BaseView 완벽 연동 버전)
@@ -13,7 +14,8 @@ import java.awt.*;
 public class UserIdentifyView extends BaseView {
 
     private final UserController userController;
-    
+    private Consumer<User> onLoginSuccess;
+
     private JTextField studentIdField;
     private JTextField nameField;
     private JButton startButton;
@@ -24,6 +26,10 @@ public class UserIdentifyView extends BaseView {
     public UserIdentifyView(NavigationController navController, UserController userController) {
         super(navController);
         this.userController = userController;
+    }
+
+    public void setOnLoginSuccess(Consumer<User> callback) {
+        this.onLoginSuccess = callback;
     }
 
     /**
@@ -105,13 +111,16 @@ public class UserIdentifyView extends BaseView {
         User user = userController.loginOrRegister(studentId, name);
 
         if (user != null) {
-            JOptionPane.showMessageDialog(this, 
-                    user.getName() + "님, 인증에 성공하였습니다.", 
-                    "로그인 성공", 
+            JOptionPane.showMessageDialog(this,
+                    user.getName() + "님, 인증에 성공하였습니다.",
+                    "로그인 성공",
                     JOptionPane.INFORMATION_MESSAGE);
-            
-            
-            navController.navigateTo(NavigationController.HOME); 
+
+            if (onLoginSuccess != null) {
+                onLoginSuccess.accept(user);
+            }
+
+            navController.navigateTo(NavigationController.HOME);
             
         } else {
             JOptionPane.showMessageDialog(this, 
