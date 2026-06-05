@@ -104,16 +104,12 @@ public class Main {
 
             // 예약하기 (User 객체 필요)
             ReservationController resCtrl = new ReservationController();
+            ReservationView reservationPanel = new ReservationView(resCtrl, user);
+            reservationPanel.setNavigationController(navController);
             BaseView reservationAdapter = new BaseView(navController) {
                 @Override
                 protected JPanel createContent() {
-                    return new JPanel();
-                }
-                @Override
-                public void onShow() {
-                    navController.navigateBack();
-                    SwingUtilities.invokeLater(() ->
-                            new ReservationView(resCtrl, user).setVisible(true));
+                    return reservationPanel;
                 }
             };
             navController.register(NavigationController.RESERVATION, reservationAdapter);
