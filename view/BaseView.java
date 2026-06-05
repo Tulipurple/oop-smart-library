@@ -75,27 +75,27 @@ public abstract class BaseView extends JPanel {
         );
 
         nav.add(navButton(
-            "🏠 홈",
+            "홈",
             NavigationController.HOME
         ));
 
         nav.add(navButton(
-            "📌 예약 현황",
+            "예약 현황",
             NavigationController.MY_RESERVATION
         ));
 
         nav.add(navButton(
-            "📅 예약하기",
+            "예약하기",
             NavigationController.RESERVATION
         ));
 
         nav.add(navButton(
-            "✨ 좌석 추천",
+            "좌석 추천",
             NavigationController.TEST
         ));
 
         nav.add(navButton(
-            "📝 후기/상태 등록",
+            "후기/상태 등록",
             NavigationController.SPACE_FORM
         ));
 
