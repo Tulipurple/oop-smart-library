@@ -73,6 +73,12 @@ public abstract class BaseRepository<T> {
         }
     }
      
+    // 파일 데이터 재로드 (새로고침 시 호출)
+    public synchronized void reload() {
+        dataList.clear();
+        loadFromFile();
+    }
+
     // 파일에서 데이터를 읽어 리스트로 반환
     protected List<String> readLines(){
         List<String> lines = new ArrayList<>();

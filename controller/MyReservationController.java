@@ -22,6 +22,13 @@ public class MyReservationController {
     }
 
     /**
+     * 파일에서 예약 데이터 재로드
+     */
+    public void reload() {
+        reservationRepository.reload();
+    }
+
+    /**
      * 현재 예약 조회
      * 종료 시간이 현재 시간 이후인 예약만 반환
      */
