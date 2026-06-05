@@ -72,6 +72,7 @@ public class Main {
 
         // 순환 참조 해소
         spaceController.setView(spaceDetailView);
+        spaceDetailView.setController(spaceController);
         spaceFormController.setView(spaceFormView);
 
         // TestController
