@@ -41,6 +41,8 @@ public abstract class BaseView extends JPanel {
         add(createContent(), BorderLayout.CENTER);
     }
 
+    protected boolean isNavEnabled() { return true; }
+
     /**
      * 화면별 콘텐츠 생성
      */
@@ -118,6 +120,7 @@ public abstract class BaseView extends JPanel {
 
         btn.setBorderPainted(false);
         btn.setFocusPainted(false);
+        btn.setEnabled(isNavEnabled());
 
         btn.setCursor(
             Cursor.getPredefinedCursor(

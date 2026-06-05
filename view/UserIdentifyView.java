@@ -28,6 +28,9 @@ public class UserIdentifyView extends BaseView {
         this.userController = userController;
     }
 
+    @Override
+    protected boolean isNavEnabled() { return false; }
+
     public void setOnLoginSuccess(Consumer<User> callback) {
         this.onLoginSuccess = callback;
     }
