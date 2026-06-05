@@ -10,6 +10,7 @@ import model.PreferenceResult;
 import model.PreferenceTest;
 import model.Recommender;
 import model.User;
+import repository.ReservationRepository;
 import repository.ReviewRepository;
 import repository.SpaceRepository;
 import repository.StatusRepository;
@@ -49,6 +50,8 @@ public class Main {
         SpaceRepository spaceRepo     = new SpaceRepository();
         ReviewRepository reviewRepo   = new ReviewRepository();
         StatusRepository statusRepo   = new StatusRepository();
+        ReservationRepository reservationRepo = new ReservationRepository();
+
 
         // 공유 모델
         PreferenceTest   preferenceTest   = new PreferenceTest();
@@ -97,13 +100,19 @@ public class Main {
             }
 
             // 예약 현황 (User 객체 필요)
-            MyReservationController myResCtrl = new MyReservationController();
+            MyReservationController myResCtrl = new MyReservationController(reservationRepo);
             MyReservationView myResView =
                     new MyReservationView(navController, myResCtrl, user);
             navController.register(NavigationController.MY_RESERVATION, myResView);
 
             // 예약하기 (User 객체 필요)
+<<<<<<< Updated upstream
             ReservationController resCtrl = new ReservationController();
+=======
+            ReservationController resCtrl = new ReservationController(reservationRepo);
+            ReservationView reservationPanel = new ReservationView(resCtrl, user);
+            reservationPanel.setNavigationController(navController);
+>>>>>>> Stashed changes
             BaseView reservationAdapter = new BaseView(navController) {
                 @Override
                 protected JPanel createContent() {

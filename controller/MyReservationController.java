@@ -17,8 +17,8 @@ public class MyReservationController {
     /**
      * 생성자
      */
-    public MyReservationController() {
-        this.reservationRepository = new ReservationRepository();
+    public MyReservationController(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
 
     /**
