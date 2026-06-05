@@ -104,9 +104,9 @@ public class ReservationView extends JPanel {
 
                 if (e.getClickCount() == 2) {
                     String spaceId = (String) spaceTable.getValueAt(selectedRow, 0);
-                    // 대안: NavigationController 스펙 연동 에러 방지를 위해 안전한 페이지 전환 처리
-                    if (navController != null) {
-                        navController.navigateTo("SPACE_DETAIL", spaceId);
+                    Space selectedSpace = findSpaceById(spaceId);
+                    if (navController != null && selectedSpace != null) {
+                        navController.navigateTo("SPACE_DETAIL", selectedSpace);
                     } else {
                         System.out.println("상세 보기 이동 요청: " + spaceId);
                     }
